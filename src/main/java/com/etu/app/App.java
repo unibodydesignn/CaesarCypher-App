@@ -13,7 +13,7 @@ import spark.template.mustache.MustacheTemplateEngine;
 
 public class App
 {
-    public static boolean search(ArrayList<Integer> array, int e) {
+    /*public static boolean search(ArrayList<Integer> array, int e) {
       System.out.println("inside search");
       if (array == null) return false;
 
@@ -21,9 +21,54 @@ public class App
         if (elt == e) return true;
       }
       return false;
-    }
+  }*/
+  public static ArrayList<String> cryptionWords(ArrayList<Integer> cryptCount, ArrayList<Integer> lastDigit, ArrayList<String> wordList, ArrayList<String> crypted) {
+
+      if(cryptCount.size() == 0 || lastDigit.size() == 0 || wordList.size() == 0)
+          return null;
+
+      if(cryptCount.size() != wordList.size())
+          return null;
+
+      if(crypted.size() == 0)
+          return null;
+
+      if(wordList.size() == 0)
+          return null;
+
+      if(wordList.size() != crypted.size())
+          return null;
+
+      else {
+          String letters = "abcdefghijklmnopqrstuvwxyz";
+          for(int i = 0; i < wordList.length(); i++) {
+
+              String cyberedWord = "";
+              String toBeCybered = wordList.get(i).toLowerCase();
+              int shiftAmount = cryptCount.get(i);
+
+              for(int j = 0; j < toBeCybered.length(); j++) {
+
+                  int charPosition = letters.indexOf(cyberedWord.charAt(j));
+                  int keyVal = (shiftAmount + charPosition) % 26;
+                  char replaceVal = letters.charAt(keyVal);
+                  cyberedWord += replaceVal;
+                  cyberedWord += lastDigit.get(i);
+              }
+
+              crypted.add(cyberedWord);
+          }
+
+          return crypted;
+      }
+  }
 
     public static void main(String[] args) {
+        ArrayList<Integer> clist = new ArrayList<>(5);
+        ArrayList<Integer> lastdigitlist = new ArrayList<>(5);
+        ArrayList<String> wordlist = new ArrayList<>(5);
+        ArrayList<String> cryptedlist;
+
         port(getHerokuAssignedPort());
 
         get("/", (req, res) -> "Hello, World");
@@ -35,22 +80,29 @@ public class App
           String input1 = req.queryParams("input1");
           java.util.Scanner sc1 = new java.util.Scanner(input1);
           sc1.useDelimiter("[;\r\n]+");
-          java.util.ArrayList<Integer> inputList = new java.util.ArrayList<>();
+          //java.util.ArrayList<Integer> inputList = new java.util.ArrayList<>();
           while (sc1.hasNext())
           {
-            int value = Integer.parseInt(sc1.next().replaceAll("\\s",""));
-            inputList.add(value);
+            //int value = Integer.parseInt(sc1.next().replaceAll("\\s",""));
+            String word = sc1.next().substring(0, sc1.next().indexOf(" "));
+            int i = Integer.parseInt(sc1.next().substring(sc1.next().indexOf(" ")));
+            wordlist.add(word);
+            clist.add(i);
           }
+
           System.out.println(inputList);
 
 
-          String input2 = req.queryParams("input2").replaceAll("\\s","");
-          int input2AsInt = Integer.parseInt(input2);
+          //String input2 = req.queryParams("input2").replaceAll("\\s","");
+          //int input2AsInt = Integer.parseInt(input2);
 
-          boolean result = App.search(inputList, input2AsInt);
+          cryptedlist = App.cryptionWords(clist, lastdigitlist, wordlist, cryptedlist);
+
+          //boolean result = App.search(inputList, input2AsInt);
 
          Map map = new HashMap();
-          map.put("result", result);
+          //map.put("result", result);
+          map.put("result", cryptedlist);
           return new ModelAndView(map, "compute.mustache");
         }, new MustacheTemplateEngine());
 
@@ -72,71 +124,3 @@ public class App
         return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
     }
 }
-
-
-
-
-
-
-/*
-    public static boolean cryptionWords(Integer[] cryptCount, Integer[] lastDigit, String[] wordList, String[] crypted) {
-
-        if(cryptCount.length == 0 || lastDigit.length == 0 || wordList.length == 0)
-            return false;
-
-        if(cryptCount.length != wordList.length)
-            return false;
-
-        if(crypted.length == 0)
-            return false;
-
-        if(wordList.length == 0)
-            return false;
-
-        if(wordList.length != crypted.length)
-            return false;
-
-        else {
-            String letters = "abcdefghijklmnopqrstuvwxyz";
-            for(int i = 0; i < wordList.length; i++) {
-
-                String cyberedWord = "";
-                String toBeCybered = wordList[i].toLowerCase();
-                int shiftAmount = cryptCount[i];
-
-                for(int j = 0; j < toBeCybered.length(); j++) {
-
-                    int charPosition = letters.indexOf(cyberedWord.charAt(j));
-                    int keyVal = (shiftAmount + charPosition) % 26;
-                    char replaceVal = letters.charAt(keyVal);
-                    cyberedWord += replaceVal;
-
-
-                }
-
-                crypted[i] = cyberedWord;
-            }
-
-            return true;
-        }
-        */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
