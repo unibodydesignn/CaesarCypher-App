@@ -24,6 +24,7 @@ public class App
   }*/
   public static ArrayList<String> cryptionWords(ArrayList<Integer> cryptCount, ArrayList<Integer> lastDigit, ArrayList<String> wordList, ArrayList<String> crypted) {
 
+
       if(cryptCount.size() == 0 || lastDigit.size() == 0 || wordList.size() == 0)
           return null;
 
@@ -40,8 +41,10 @@ public class App
           return null;
 
       else {
+          ArrayList<String> newlist = new ArrayList<>();
+          newlist = crypted;
           String letters = "abcdefghijklmnopqrstuvwxyz";
-          for(int i = 0; i < wordList.length(); i++) {
+          for(int i = 0; i < wordList.size(); i++) {
 
               String cyberedWord = "";
               String toBeCybered = wordList.get(i).toLowerCase();
@@ -56,18 +59,16 @@ public class App
                   cyberedWord += lastDigit.get(i);
               }
 
-              crypted.add(cyberedWord);
+              newlist.add(cyberedWord);
           }
 
-          return crypted;
+          return newlist;
       }
   }
 
     public static void main(String[] args) {
-        ArrayList<Integer> clist = new ArrayList<>(5);
-        ArrayList<Integer> lastdigitlist = new ArrayList<>(5);
-        ArrayList<String> wordlist = new ArrayList<>(5);
-        ArrayList<String> cryptedlist;
+
+
 
         port(getHerokuAssignedPort());
 
@@ -81,28 +82,44 @@ public class App
           java.util.Scanner sc1 = new java.util.Scanner(input1);
           sc1.useDelimiter("[;\r\n]+");
           //java.util.ArrayList<Integer> inputList = new java.util.ArrayList<>();
+          ArrayList<String> wordlist = new ArrayList<>(5);
           while (sc1.hasNext())
           {
             //int value = Integer.parseInt(sc1.next().replaceAll("\\s",""));
-            String word = sc1.next().substring(0, sc1.next().indexOf(" "));
-            int i = Integer.parseInt(sc1.next().substring(sc1.next().indexOf(" ")));
+            String word = sc1.next();
             wordlist.add(word);
-            clist.add(i);
           }
 
-          System.out.println(inputList);
 
+          //System.out.println(inputList);
 
-          //String input2 = req.queryParams("input2").replaceAll("\\s","");
-          //int input2AsInt = Integer.parseInt(input2);
+          String input2 = req.queryParams("input2").replaceAll("\\s","");
+          java.util.Scanner sc2 = new java.util.Scanner(input2);
+          int input2AsInt = Integer.parseInt(input2);
+          ArrayList<Integer> shiftlist = new ArrayList<>(5);
+          while(sc2.hasNext()) {
 
-          cryptedlist = App.cryptionWords(clist, lastdigitlist, wordlist, cryptedlist);
+              int i = Integer.parseInt(sc2.next().replaceAll("//s",""));
+              shiftlist.add(i);
+          }
+
+          String input3 = req.queryParams("input3").replaceAll("\\s","");
+          java.util.Scanner sc3 = new java.util.Scanner(input3);
+          ArrayList<Integer> lastdigitlist = new ArrayList<>(5);
+          while(sc3.hasNext()) {
+
+              int j = Integer.parseInt(sc2.next().replaceAll("//s", ""));
+              lastdigitlist.add(j);
+          }
+
+          ArrayList<String> cryptedList = new ArrayList<>();
+          ArrayList<String> nl = App.cryptionWords(shiftlist, lastdigitlist, wordlist, cryptedList);
 
           //boolean result = App.search(inputList, input2AsInt);
 
          Map map = new HashMap();
           //map.put("result", result);
-          map.put("result", cryptedlist);
+          map.put("result", nl);
           return new ModelAndView(map, "compute.mustache");
         }, new MustacheTemplateEngine());
 
