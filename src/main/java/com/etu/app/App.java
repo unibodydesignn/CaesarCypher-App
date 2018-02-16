@@ -93,9 +93,10 @@ public class App
 
           //System.out.println(inputList);
 
-          String input2 = req.queryParams("input2").replaceAll("\\s","");
+          String input2 = req.queryParams("input2");
           java.util.Scanner sc2 = new java.util.Scanner(input2);
-          int input2AsInt = Integer.parseInt(input2);
+          sc2.useDelimiter("[;\r\n]+");
+
           ArrayList<Integer> shiftlist = new ArrayList<>(5);
           while(sc2.hasNext()) {
 
@@ -105,6 +106,7 @@ public class App
 
           String input3 = req.queryParams("input3").replaceAll("\\s","");
           java.util.Scanner sc3 = new java.util.Scanner(input3);
+          sc2.useDelimiter("[;\r\n]+");
           ArrayList<Integer> lastdigitlist = new ArrayList<>(5);
           while(sc3.hasNext()) {
 
