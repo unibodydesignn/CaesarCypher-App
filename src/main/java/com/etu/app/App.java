@@ -104,7 +104,7 @@ public class App
               shiftlist.add(i);
           }
 
-          String input3 = req.queryParams("input3").replaceAll("\\s","");
+          String input3 = req.queryParams("input3");
           java.util.Scanner sc3 = new java.util.Scanner(input3);
           sc2.useDelimiter("[;\r\n]+");
           ArrayList<Integer> lastdigitlist = new ArrayList<>(5);
