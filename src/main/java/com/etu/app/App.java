@@ -22,7 +22,7 @@ public class App
       }
       return false;
   }*/
-  public static ArrayList<String> cryptionWords(ArrayList<Integer> cryptCount, ArrayList<Integer> lastDigit, ArrayList<String> wordList, ArrayList<String> crypted) {
+  public static ArrayList<String> cryptionWords(ArrayList<String> wordList, ArrayList<String> crypted, ArrayList<Integer> cryptCount, ArrayList<Integer> lastDigit) {
 
 
       if(cryptCount.size() == 0 || lastDigit.size() == 0 || wordList.size() == 0)
@@ -52,15 +52,15 @@ public class App
 
               for(int j = 0; j < toBeCybered.length(); j++) {
 
-                  int charPosition = letters.indexOf(cyberedWord.charAt(j));
+                  int charPosition = letters.indexOf(toBeCybered.charAt(j));
                   int keyVal = (shiftAmount + charPosition) % 26;
                   char replaceVal = letters.charAt(keyVal);
                   cyberedWord += replaceVal;
-                  cyberedWord += lastDigit.get(i);
-                  cyberedWord += crypted.get(i);
+                  
               }
-
-              newlist.add(cyberedWord);
+                cyberedWord += lastDigit.get(i);
+                cyberedWord += crypted.get(i);
+                newlist.add(cyberedWord);
           }
 
           return newlist;
@@ -128,7 +128,7 @@ public class App
           }
 
 
-          ArrayList<String> nl = App.cryptionWords(shiftlist, lastdigitlist, wordlist, cryptedList);
+          ArrayList<String> nl = App.cryptionWords(wordlist, cryptedList, shiftlist, lastdigitlist);
 
           //boolean result = App.search(inputList, input2AsInt);
 
