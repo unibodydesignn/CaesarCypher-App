@@ -42,7 +42,7 @@ public class App
 
       else {
           ArrayList<String> newlist = new ArrayList<>();
-          newlist = crypted;
+
           String letters = "abcdefghijklmnopqrstuvwxyz";
           for(int i = 0; i < wordList.size(); i++) {
 
@@ -57,6 +57,7 @@ public class App
                   char replaceVal = letters.charAt(keyVal);
                   cyberedWord += replaceVal;
                   cyberedWord += lastDigit.get(i);
+                  cyberedWord += crypted.get(i);
               }
 
               newlist.add(cyberedWord);
@@ -92,29 +93,41 @@ public class App
 
 
           //System.out.println(inputList);
-
           String input2 = req.queryParams("input2");
           java.util.Scanner sc2 = new java.util.Scanner(input2);
           sc2.useDelimiter("[;\r\n]+");
-
-          ArrayList<Integer> shiftlist = new ArrayList<>(5);
-          while(sc2.hasNext()) {
-
-              int i = Integer.parseInt(sc2.next().replaceAll("//s",""));
-              shiftlist.add(i);
+          //java.util.ArrayList<Integer> inputList = new java.util.ArrayList<>();
+          ArrayList<String> cryptedList = new ArrayList<>();
+          while (sc2.hasNext())
+          {
+            //int value = Integer.parseInt(sc1.next().replaceAll("\\s",""));
+            String word = sc2.next();
+            cryptedList.add(word);
           }
+
 
           String input3 = req.queryParams("input3");
           java.util.Scanner sc3 = new java.util.Scanner(input3);
-          sc2.useDelimiter("[;\r\n]+");
-          ArrayList<Integer> lastdigitlist = new ArrayList<>(5);
+          sc3.useDelimiter("[;\r\n]+");
+
+          ArrayList<Integer> shiftlist = new ArrayList<>(5);
           while(sc3.hasNext()) {
 
-              int j = Integer.parseInt(sc2.next().replaceAll("//s", ""));
+              int i = Integer.parseInt(sc3.next().replaceAll("//s",""));
+              shiftlist.add(i);
+          }
+
+          String input4 = req.queryParams("input4");
+          java.util.Scanner sc4 = new java.util.Scanner(input4);
+          sc4.useDelimiter("[;\r\n]+");
+          ArrayList<Integer> lastdigitlist = new ArrayList<>(5);
+          while(sc4.hasNext()) {
+
+              int j = Integer.parseInt(sc4.next().replaceAll("//s", ""));
               lastdigitlist.add(j);
           }
 
-          ArrayList<String> cryptedList = new ArrayList<>();
+
           ArrayList<String> nl = App.cryptionWords(shiftlist, lastdigitlist, wordlist, cryptedList);
 
           //boolean result = App.search(inputList, input2AsInt);
