@@ -24,21 +24,45 @@ public class App
   }*/
   public static ArrayList<String> cryptionWords(ArrayList<String> wordList, ArrayList<String> crypted, ArrayList<Integer> cryptCount, ArrayList<Integer> lastDigit) {
 
-
+      int count = 0;    
       if(cryptCount.size() == 0 || lastDigit.size() == 0 || wordList.size() == 0)
           return null;
+
+      count++;
 
       if(cryptCount.size() != wordList.size())
           return null;
 
+      count++;
+
       if(crypted.size() == 0)
           return null;
+
+      count++;
 
       if(wordList.size() == 0)
           return null;
 
+      count++;
+
       if(wordList.size() != crypted.size())
           return null;
+
+      count++;
+
+      if(count == 5)    {  
+        for(int m = 0; m < wordList.size(); m++) {
+            if(wordList.get(m).equals(""))
+                return null;
+        } }
+
+        count++;
+
+        if(count == 6) {
+             for(int k = 0; k < cryptCount.size(); k++) {
+                if(cryptCount.get(k) < 0)
+                    return null;
+        } }
 
       else {
           ArrayList<String> newlist = new ArrayList<>();
@@ -65,6 +89,8 @@ public class App
 
           return newlist;
       }
+
+      return null;
   }
 
     public static void main(String[] args) {
